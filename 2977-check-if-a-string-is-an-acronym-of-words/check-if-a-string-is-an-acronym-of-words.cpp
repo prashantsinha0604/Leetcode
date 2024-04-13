@@ -1,22 +1,24 @@
 class Solution {
 public:
     bool isAcronym(vector<string>& words, string s) {
+        int i = 0 , j = 0 ;
         if ( words.size() != s.size())
         {
             return false;
         }
         else
         {
-            for(int i = 0 ; i < s.size() ; i++ )
-            {
-                for(int j = 0 ; j < 1 ; j++ )
+           while( i < s.size() )
+           {
+                if ( s[i] == words[i][j] )
                 {
-                    if ( s[i] != words[i][j] )
-                    {
-                        return false;
-                    }
+                   i++; 
                 }
-            }
+                else
+                {
+                    return false;
+                }
+           }
         }
         return true;
     }
