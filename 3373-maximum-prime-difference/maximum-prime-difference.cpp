@@ -1,46 +1,58 @@
 class Solution {
 public:
-bool chk_prime( int n )
-{
-
-    if( n == 1 )
-    {
-        return false;
-    }
     
-    for( int i = 2  ; i * i  <= n ; i++ )
-    {
-        if( n % i == 0 )
-        {
-            return false ;
-        }
-    }
-    return true ;
     
-}
+    
     int maximumPrimeDifference(vector<int>& nums) {
-        vector < int > ans ;
-        for( int i = 0 ; i < nums.size() ; i++ )
+        int maxi_value = *max_element( nums.begin(), nums.end() );
+        
+//         sbse phle seive se sare prime find krlo...
+        
+        unordered_set< int > total_prime;
+        
+        vector< bool > prime( maxi_value + 1, true );
+        
+        for(int p = 2; p * p <= maxi_value; p++ )
         {
-            if(chk_prime(nums[i]) == true )
+            if( prime[p] == true )
             {
-                ans.push_back( i ); 
+                for(int i = p * p; i <= maxi_value; i += p )
+                {
+                    prime[i] = false;
+                }
             }
         }
-
-        for(auto i : ans )
+        
+        for(int j = 2; j <= maxi_value; j++ )
         {
-            cout << i << endl;
+            if( prime[j] )
+            {
+                total_prime.insert( j );
+            }
         }
-        int diff = 0 ;
-        if( ans.size() == 1 )
+        
+        int first_prime = -1;
+        for(int i = 0; i < nums.size(); i++ )
         {
-            return 0 ;
+            if( total_prime.find( nums[i] ) != total_prime.end() )
+            {
+                first_prime = i;
+                break;
+            }
         }
-
-
-        diff = abs( ans[0] - ans[ans.size() - 1] );
-
-        return diff;
+        
+        int last_prime_idx = -1;
+        for(int i = nums.size() - 1; i > -1; i-- )
+        {
+            if( total_prime.find( nums[i] ) != total_prime.end() )
+            {
+               last_prime_idx  = i;
+               break;
+            }
+        }
+        
+        int answer = abs( last_prime_idx - first_prime );
+        
+        return answer;
     }
 };
