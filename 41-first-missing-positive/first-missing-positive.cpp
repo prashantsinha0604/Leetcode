@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+
+        unordered_set <int > s ;
+        for( auto i : nums )
+        {
+            s.insert( i );
+        }
+
+        for( int i = 1 ; i <= 1000001 ; i++ )
+        {
+           if( s.find( i ) == s.end() )
+           {
+                return i;
+           }
+        }
+        return 0;
+    }
+};
