@@ -11,34 +11,43 @@
  */
 class Solution {
 public:
-    void solve ( TreeNode * root , int & sum , bool isLeft )
+void sum( TreeNode * root , int &ans )
+{
+    // int sum = 0 ;
+    queue<TreeNode * > q ;
+    q.push( root );
+
+    while( !q.empty() )
     {
-        if( root == NULL )
+        TreeNode * temp = q.front(); 
+        q.pop();
+
+        if( temp -> left )
         {
-            return ;
+            q.push( temp -> left );
         }
 
-        if( isLeft and !root->left and !root -> right )
+        if( temp -> right )
         {
-            sum = sum + root -> val ;
-        }
-        if( root -> left )
-        {
-            solve( root -> left , sum , true );
+            q.push(temp -> right );
         }
 
-        if( root -> right )
+        if( temp -> left )
         {
-            solve( root -> right , sum , false );
+            if( temp -> left -> left == NULL and temp -> left -> right == NULL )
+            {
+                ans = ans + temp -> left -> val ;
+            }
         }
     }
+}
     int sumOfLeftLeaves(TreeNode* root) {
-        int sum = 0 ;
-        if( !root )
+        int ans = 0 ;
+        if( root == NULL )
         {
             return 0 ;
         }
-        solve ( root , sum ,false);
-        return sum ;
+        sum(root , ans );
+        return ans;
     }
 };
