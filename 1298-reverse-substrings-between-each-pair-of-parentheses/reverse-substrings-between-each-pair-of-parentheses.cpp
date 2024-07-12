@@ -27,11 +27,11 @@ public:
         temp = "";
         while( !st.empty() )
         {
-            temp = temp + st.top();
+            temp = st.top() + temp;
             st.pop();
         }
 
-        reverse( temp.begin() , temp.end() );
+        // reverse( temp.begin() , temp.end() );
 
         return temp ;
     }
