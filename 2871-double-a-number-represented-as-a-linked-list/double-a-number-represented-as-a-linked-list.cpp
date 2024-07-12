@@ -10,47 +10,53 @@
  */
 class Solution {
 public:
-    ListNode* doubleIt(ListNode* head) {
-        string ans = "";
-        if( head -> val == 0 )
+    ListNode* reverseList(ListNode* head)
+    {
+        ListNode* prev = nullptr, *curr = head, *next;
+
+        if( curr -> next == nullptr )
         {
-            return head ;
+            return head;
+        } 
+
+        while( curr )
+        {
+            next = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
         }
 
-        ListNode * temp = head ;
-        while( temp  )
-        {
-            ans = ans + to_string( temp -> val );
-            temp = temp -> next ;
-        }
-        string s = ans , output="" ;
-        int n1 = s.size() - 1, n2 = ans.size() - 1;
-        int carry = 0; 
-        while( n1 >= 0 or n2 >= 0 )
-        {
-            output.push_back( ((s[n1] - 48 + ans[n2] - 48 + carry ) % 10) + 48 );
-            carry = (s[n1] - 48 + ans[n2] - 48 + carry ) / 10;
-            n1--;
-            n2--;
-        }
-        if( carry )
-        {
-            output.push_back( carry + 48 );
-        }
-
-        reverse( begin(output), end(output) );
-        cout<< output ;
-    
-        ListNode * dummyNode = new ListNode();
-        temp = dummyNode;
-
-        for( int i = 0 ; i < output.size() ; i++ )
-        {
-            ListNode * tempNode = new ListNode( output[i] - '0' );
-            temp -> next = tempNode;
-            temp = temp -> next;
-        }
-
-        return dummyNode -> next ;
+        return prev;
     }
+    ListNode* doubleIt(ListNode* head) {
+
+        if( head == nullptr )
+        {
+            return head;
+        }
+        ListNode* newhead = reverseList( head );
+
+        ListNode* i = newhead;
+        ListNode* temp = nullptr;
+        int carry = 0;
+        while( i )
+        {
+             i -> val = i -> val + carry + i -> val;
+            carry = i -> val / 10;
+            i -> val = i -> val % 10;
+            temp = i;
+            i = i -> next;
+        }
+
+
+        if( carry != 0 )
+        {
+            ListNode* extra = new ListNode( carry );
+            temp -> next = extra;
+        }
+        newhead = reverseList(newhead);
+        return newhead;
+    }
+
 };
