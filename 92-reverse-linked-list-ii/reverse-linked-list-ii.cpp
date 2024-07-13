@@ -14,13 +14,13 @@ public:
         ListNode * dummyNode = new ListNode() , * curr = head ;
         int size = 0 ;
         ListNode * i = dummyNode ;
-        while( curr )
-        {
-            size++;
-            curr = curr -> next ;
-        }
+        // while( curr )
+        // {
+        //     size++;
+        //     curr = curr -> next ;
+        // }
 
-        if( left == right or size == 1 )
+        if( left == right  )
         {
             return head;
         }
