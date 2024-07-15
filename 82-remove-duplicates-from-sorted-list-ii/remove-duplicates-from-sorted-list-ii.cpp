@@ -11,33 +11,45 @@
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        unordered_map < int , int > mp ;
-        ListNode * i = head;
 
-        while( i )
+        if( head == nullptr or head -> next == nullptr )
         {
-            mp[i ->  val ]++;
-            i= i -> next ;
+            return head;
         }
 
-        i = head ;
+        ListNode* dummyNode = new ListNode(-1);
+        dummyNode -> next = head;
+        ListNode* leftPrev = dummyNode;
 
-        ListNode * dummyNode = new ListNode();
-        ListNode * k = dummyNode ;
+        ListNode* curr = head, *next = head -> next;
 
-        while( i )
+        while( next )
         {
-            if( mp[i -> val ] == 1 )
+            if( curr -> val == next -> val )
             {
-                ListNode * tempNode = new ListNode( i -> val );
-                k -> next = tempNode ;
-                k = k -> next ;
-                mp.erase( i -> val );
+                if( next -> next != nullptr  and next -> next -> val != curr -> val )
+                {
+                    leftPrev -> next = next -> next;
+                    curr = leftPrev -> next;
+                    next = curr -> next;
+                }
+                else
+                {
+                    if( next -> next == nullptr )
+                    {
+                        leftPrev -> next = next -> next;
+                    }
+                    next = next -> next;
+                }
             }
-
-            i = i -> next ;
+            else
+            {
+                next = next -> next;
+                leftPrev = curr;
+                curr = curr -> next;
+            }
         }
 
-        return dummyNode -> next ;
+        return dummyNode -> next;
     }
 };
