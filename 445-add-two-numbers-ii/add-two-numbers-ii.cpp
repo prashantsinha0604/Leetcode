@@ -32,48 +32,51 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         ListNode * head1 = reverseList( l1) , * head2 = reverseList( l2 );
         ListNode * i = head1 , * j = head2 ;
-        ListNode * dummyNode = new ListNode();
-        ListNode * k = dummyNode ;
+        // ListNode * dummyNode = new ListNode();
+        ListNode * tail = nullptr ;
         int carry = 0 , sum = 0 ;
         
         while( i and j )
         {
             int sum = i -> val + carry + j -> val;
             carry = (sum )/ 10;
-            ListNode * temp = new ListNode( sum % 10 );
-            k -> next = temp ;
+            i -> val = sum % 10 ;
+            tail = i;
             i = i -> next;
             j = j -> next ;
-            k = k -> next ;
+        }
+
+        if( j and i == nullptr )
+        {
+            tail -> next = j;
         }
 
         while( i )
         {
             sum = i -> val + carry ;
             carry = (sum )/ 10;
-            ListNode * temp = new ListNode( sum % 10 );
-            k -> next = temp ;
-            k = k -> next ;
+            i -> val = sum % 10 ;
+            tail = i;
             i = i -> next ;
         }
+
         while( j )
         {
             sum =  carry + j -> val;
             carry = ( sum )/ 10;
-            ListNode * temp = new ListNode( sum % 10 );
-            k -> next = temp ;
-            k = k -> next ;
-            j = j -> next ;
+            j -> val = sum % 10;
+            tail = j;
+            j = j -> next;
         }
 
         if( carry )
         {
             ListNode * temp = new ListNode( carry );
-            k -> next = temp ;
-            k = k -> next ;
+            tail -> next  = temp ;
+            tail = tail -> next;
         }
-        dummyNode = reverseList( dummyNode -> next );
+        l1 = reverseList( head1 );
 
-        return dummyNode ;
+        return l1 ;
     }
 };
