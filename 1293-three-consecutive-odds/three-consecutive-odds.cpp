@@ -10,7 +10,7 @@ public:
                 if( cnt != 3 )
                 {
                     cnt++ ;
-                    cout << " ++ for " << arr[i] << endl ;
+                    
                 }
                 if( cnt == 3 ) 
                 {
